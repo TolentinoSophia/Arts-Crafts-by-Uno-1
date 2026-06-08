@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Squada+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+
+    body {
+      background: linear-gradient(-45deg,#e6fff3 0%, #d9e6d9 25%, #5a7967 50%, #8fb283 75%);
+      background-size: 300% 300%;
+      font-family: 'Squada One', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: gradientBG 13s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wrapper {
+      background-color: white;
+      width: 97%;
+      height: 94%;
+      padding: 20px;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wrapper:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #879073;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-left .profile-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-left .profile-icon img {
+      width: 30px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      background-color: #879073;
+      padding: 8px 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links:hover {
+      background-color: #6b755a;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    }
+
+    .nav-links a.active {
+      background-color: white;
+      color: #879073;
+    }
+
+    .nav-links a:hover {
+      background-color: #d8e6f3;
+      color: #879073;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 36px;
+      color: #879073;
+      margin-top: 0px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.2s;
+    }
+
+    .title-subtitle-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 50px; 
+      margin-top: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .subtitle {
+      background-color: #879073;
+      color: white;
+      padding: 10px 385px;
+      text-align: center;
+      border-radius: 20px;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      margin-bottom: 0px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.4s;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.6s;
+    }
+
+    .card {
+      width: 18%;
+      perspective: 1000px;
+      border-radius: 20px;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+      cursor: pointer;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.8s; }
+    .card:nth-child(2) { animation-delay: 0.9s; }
+    .card:nth-child(3) { animation-delay: 1.0s; }
+    .card:nth-child(4) { animation-delay: 1.1s; }
+    .card:nth-child(5) { animation-delay: 1.2s; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 330px;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 400px;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .card-front {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-front:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-front img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .card-front .name-label {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #879073;
+      color: white;
+      padding: 5px 60px;
+      border-radius: 15px;
+      font-family: 'Amaranth', sans-serif;
+      transition: transform 0.3s ease;
+    }
+
+    .card-front:hover .name-label {
+      transform: translateX(-50%) translateY(-3px);
+    }
+
+    .card-back {
+      background: #879073;
+      transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      text-align: justify;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 14px;
+    }
+
+    .card-back ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .closing-message {
+      background-color: #879073;
+      padding: 10px;
+      text-align: center;
+      border-radius: 25px;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      opacity: 0;
+      animation: popIn 0.5s ease forwards 1.4s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .closing-message:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="profile-icon">
+          <a href="menu.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/back.png"/></a>
+        </div>
+        <div class="profile-icon">
+          <img src="https://imgur.com/g3g1lps.jpeg" alt="Profile Icon" />
+        </div>
+        <div class="nav-links">
+          <a href="home.html" class="nav-button">Home</a>
+          <a href="about-us.html" class="nav-button active">About Us</a>
+          <a href="gallery.html" class="nav-button">Gallery</a>
+          <a href="shop.html" class="nav-button">Shop</a>
+          <a href="profile.html" class="nav-button">Profile</a>
+          <a href="contact-us.html" class="nav-button">Contact Us</a>
+        </div>
+        <div class="nav-links" style="padding:5px; margin-left:1rem;">
+          <a href="login.html" class="nav-button">Log out</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="title-subtitle-wrapper">
+      <h2 class="title">FUN FACTS ABOUT US</h2>
+      <div class="subtitle">Flip to know us with our five facts about us.</div>
+    </div>    
+
+    <div class="cards">
+      <div class="card" data-name="Bolante" data-image="https://imgur.com/lJIv69E.jpeg" data-facts="<li>I can read and write in Hangul and Hiragana.</li><br><li>I know how to count from 1 to 10 in six different languages.</li><br><li>I’m obsessed with korean entertainment.</li><br><li>I can’t pronounce the 'R' sound properly.</li><br><li>I’m not a big fan of seafood.</li>">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="https://imgur.com/lJIv69E.jpeg" alt="Bolante">
+            <div class="name-label">Bolante</div>
+          </div>
+          <div class="card-back">
+            <ul>
+              <li>I can read and write in Hangul and Hiragana.</li><br>
+              <li>I know how to count from 1 to 10 in six different languages.</li><br>
+              <li>I’m obsessed with korean entertainment.</li><br>
+              <li>I can’t pronounce the "R" sound properly.</li><br>
+              <li>I’m not a big fan of seafood.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="Mendoza" data-image="https://imgur.com/BWsL8NR.jpeg" data-facts="<li>Coffee gives me palpitations every time I drink it.</li><br><li>I always wave when I see an airplane in the sky.</li><br><li>I love listening to music when studying.</li><br><li>I always end up taking longer in the bathroom because I’m too busy singing.</li><br><li>I can’t sleep with just one pillow. I need at least five or more.</li>">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="https://imgur.com/BWsL8NR.jpeg" alt="Mendoza">
+            <div class="name-label">Mendoza</div>
+          </div>
+          <div class="card-back">
+            <ul>
+              <li>Coffee gives me palpitations every time I drink it.</li><br>
+              <li>I always wave when I see an airplane in the sky.</li><br>
+              <li>I love listening to music when studying.</li><br>
+              <li>I always end up taking longer in the bathroom because I’m too busy singing.</li><br>
+              <li>I can’t sleep with just one pillow. I need at least five or more.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="Paz" data-image="https://i.imgur.com/JC7sHA0.jpeg" data-facts="<li>Likes cold spaces.</li><br><li>Likes reading manga/hwa.</li><br><li>My handwriting depends on the quality of pen.</li><br><li>Always procrastinate but still gets the job done.</li><br><li>Delulu</li>">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="https://i.imgur.com/JC7sHA0.jpeg" alt="Paz">
+            <div class="name-label">Paz</div>
+          </div>
+          <div class="card-back">
+            <ul>
+              <li>Likes cold spaces.</li><br>
+              <li>Likes reading manga/hwa.</li><br>
+              <li>My handwriting depends on the quality of pen.</li><br>
+              <li>Always procrastinate but still gets the job done.</li><br>
+              <li>Delulu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="Tuazon" data-image="https://imgur.com/ACSrgOa.jpeg" data-facts="<li>I love reading comics and novels and watching anime.</li><br><li>I enjoy the thrill and stimulation of programming or coding something.</li><br><li>A boy who dreamed of dreaming.</li><br><li>Cats are my favorite because I want to be like them. Always sleeping, eating, going wherever they want.</li><br><li>I like the silence of the night.</li>">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="https://imgur.com/ACSrgOa.jpeg" alt="Tuazon">
+            <div class="name-label">Tuazon</div>
+          </div>
+          <div class="card-back">
+            <ul>
+              <li>I love reading comics and novels and watching anime.</li><br>
+              <li>I enjoy the thrill and stimulation of programming or coding something.</li><br>
+              <li>A boy who dreamed of dreaming.</li><br>
+              <li>Cats are my favorite because I want to be like them. Always sleeping, eating, going wherever they want.</li><br>
+              <li>I like the silence of the night.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="Tolentino" data-image="https://imgur.com/P7Q86P4.jpeg" data-facts="<li>What I dislike most is wasting time and being humiliated specifically in front of other people.</li><br><li>I’m not into nibbling food, I prefer to always eat with rice.</li><br><li>I usually eat sopas or mango with rice.</li><br><li>I struggle having eye contact when speaking with people, I feel uncomfortable.</li><br><li>I find it challenging to connect with new people or those I’m not close to.</li>">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="https://imgur.com/P7Q86P4.jpeg" alt="Tolentino">
+            <div class="name-label">Tolentino</div>
+          </div>
+          <div class="card-back">
+            <ul>
+              <li>What I dislike most is wasting time and being humiliated specifically in front of other people.</li><br>
+              <li>I’m not into nibbling food, I prefer to always eat with rice.</li><br>
+              <li>I usually eat sopas or mango with rice.</li><br>
+              <li>I struggle having eye contact when speaking with people, I feel uncomfortable.</li><br>
+              <li>I find it challenging to connect with new people or those I’m not close to.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="closing-message">
+      “When you buy something handmade, you’re buying more than just a thing. You’re buying a story, a moment, a part 
+of someone’s heart.”
+    </div>
+
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const name = card.getAttribute('data-name');
+        const image = card.getAttribute('data-image');
+        const facts = card.getAttribute('data-facts');
+      });
+    });
+  </script>
+</body>
+</html>

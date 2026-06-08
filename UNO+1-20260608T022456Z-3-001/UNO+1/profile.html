@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Crafty Creations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Squada+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(-45deg, #e6fff3 0%, #d9e6d9 25%, #5a7967 50%, #8fb283 75%);
+      background-size: 300% 300%;
+      font-family: 'Squada One', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: gradientBG 13s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wrapper {
+      background-color: white;
+      width: 97%;
+      height: 94%;
+      padding: 20px;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wrapper:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #879073;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-left .profile-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-left .profile-icon img {
+      width: 30px;
+      border-radius:50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      background-color: #879073;
+      padding: 8px 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links:hover {
+      background-color: #6b755a;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    }
+
+    .nav-links a.active {
+      background-color: white;
+      color: #879073;
+    }
+
+    .nav-links a:hover {
+      background-color: #d8e6f3;
+      color: #879073;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 36px;
+      color: #879073;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.2s;
+    }
+
+    .subtitle {
+      background-color: #879073;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 20px;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.4s;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      padding-right: 15px;
+      gap: 15px;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.6s;
+    }
+
+    .business-overview {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background-color: #f5f7f5;
+      border-radius: 20px;
+      padding: 20px;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards 0.8s;
+    }
+
+    .business-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .business-logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .business-info h3 {
+      font-size: 28px;
+      color: #5a7967;
+      margin-bottom: 10px;
+    }
+
+    .business-info p {
+      font-family: 'Amaranth', sans-serif;
+      color: #6b755a;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .team-section {
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 1.0s;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .team-image {
+      width: 18%;
+      height: 330px;
+      border: 3px solid #879073; 
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-image:nth-child(1) { animation-delay: 1.2s; }
+    .team-image:nth-child(2) { animation-delay: 1.3s; }
+    .team-image:nth-child(3) { animation-delay: 1.4s; }
+    .team-image:nth-child(4) { animation-delay: 1.5s; }
+    .team-image:nth-child(5) { animation-delay: 1.6s; }
+
+    .team-image:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-image .flip-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+
+    .team-image:hover .flip-container {
+      transform: rotateY(180deg);
+    }
+
+    .team-image .front,
+    .team-image .back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      border-radius: 17px;
+    }
+
+    .team-image .front {
+      z-index: 2;
+    }
+
+    .team-image .back {
+      transform: rotateY(180deg);
+      background-color: #f5f7f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      font-family: 'Amaranth', sans-serif;
+      color: #5a7967;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .team-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-image .name-label {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #879073;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-family: 'Amaranth', sans-serif;
+      transition: transform 0.3s ease;
+    }
+
+    .team-image:hover .name-label {
+      transform: translateX(-50%) translateY(-3px);
+    }
+
+    .achievements {
+      background-color: #f5f7f5;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards 1.8s;
+    }
+
+    .achievements h3 {
+      font-size: 24px;
+      color: #5a7967;
+      margin-bottom: 10px;
+    }
+
+    .achievements p {
+      font-family: 'Amaranth', sans-serif;
+      color: #6b755a;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 5rem;
+      background: rgba(255, 255, 255, 0.95);
+      color: #495057;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      border-top: 1px solid #879073;
+    }
+
+    .social-icons {
+      margin-bottom: 15px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #f5f7f5;
+      color: #879073;
+      font-size: 1.2rem;
+      margin: 0 8px;
+      border-radius: 50%;
+      border: 2px solid #879073;
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background-color: #879073;
+      color: #ffffff;
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .closing-message {
+      background-color: #879073;
+      padding: 10px;
+      text-align: center;
+      border-radius: 25px;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      opacity: 0;
+      animation: popIn 0.5s ease forwards 2.2s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .closing-message:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="profile-icon">
+          <a href="menu.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/back.png"/></a>
+        </div>
+        <div class="profile-icon">
+          <img src="https://imgur.com/g3g1lps.jpeg" alt="Profile Icon" />
+        </div>
+        <div class="nav-links">
+          <a href="home.html" class="nav-button">Home</a>
+          <a href="about-us.html" class="nav-button">About Us</a>
+          <a href="gallery.html" class="nav-button">Gallery</a>
+          <a href="shop.html" class="nav-button">Shop</a>
+          <a href="profile.html" class="nav-button active">Profile</a>
+          <a href="contact-us.html" class="nav-button">Contact Us</a>
+        </div>
+        <div class="nav-links" style="padding:5px; margin-left:1rem;">
+          <a href="login.html" class="nav-button">Log out</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="title">UNO+1 CREATES</h2>
+    <div class="subtitle">Your Destination for Handmade or Digital Arts & Crafts</div>
+
+    <div class="content">
+      <div class="business-overview">
+        <img src="https://imgur.com/g3g1lps.jpeg" alt="Crafty Creations Logo" class="business-logo">
+        <div class="business-info">
+          <h3>About Our Business</h3>
+          <p>Uno+1 Creates is a passionate arts and crafts business dedicated to bringing unique, handmade and digital products to life. Our mission is to inspire creativity and spread joy through our crochet pieces, digital templates, illustrations, and posters. Our vision is to become a beloved brand that celebrates individuality and craftsmanship.</p>
+        </div>
+      </div>
+
+      <div class="team-section">
+        <h3 style="font-size: 24px; color: #5a7967; margin-bottom: 10px;">Meet Our Creative Team</h3>
+        <div class="image-container">
+          <div class="team-image">
+            <div class="flip-container">
+              <div class="front">
+                <img src="https://imgur.com/W3sTM2g.jpeg" alt="Bolante">
+                <div class="name-label">Bolante</div>
+              </div>
+              <div class="back">
+                <h3>Bolante</h3>
+                <p>Crochet Artist</p> <br><br>
+                <b>Full Name: </b><p>Eldrids Zarenoh P. Bolante</p>
+                <b>Birthday: </b><p>August 27, 2004</p>
+                <b>Age: </b><p>20 yrs old</p>
+              </div>
+            </div>
+          </div>
+          <div class="team-image">
+            <div class="flip-container">
+              <div class="front">
+                <img src="https://i.imgur.com/Ht3slUE.jpeg" alt="Mendoza">
+                <div class="name-label">Mendoza</div>
+              </div>
+              <div class="back">
+                <h3>Mendoza</h3>
+                <p>Paintings Artist</p> <br><br>
+                <b>Full Name: </b><p>Althea Maurice T. Mendoza</p>
+                <b>Birthday: </b><p>August 18, 2005</p>
+                <b>Age: </b><p>19 yrs old</p>
+              </div>
+            </div>
+          </div>
+          <div class="team-image">
+            <div class="flip-container">
+              <div class="front">
+                <img src="https://i.imgur.com/v7kIxzO.jpeg" alt="Paz">
+                <div class="name-label">Paz</div>
+              </div>
+              <div class="back">
+                <h3>Paz</h3>
+                <p>Presentation Artist</p> <br><br>
+                <b>Full Name: </b><p>Christian Zedrick P. Paz</p>
+                <b>Birthday: </b><p>May 06, 2005</p>
+                <b>Age: </b><p>19 yrs old</p>
+              </div>
+            </div>
+          </div>
+          <div class="team-image">
+            <div class="flip-container">
+              <div class="front">
+                <img src="https://i.imgur.com/k1AoIPD.jpeg" alt="Tuazon">
+                <div class="name-label">Tuazon</div>
+              </div>
+              <div class="back">
+                <h3>Tuazon</h3>
+                <p>Poster Artist</p> <br><br>
+                <b>Full Name: </b><p>Dave Patrick L. Tuazon</p>
+                <b>Birthday: </b><p>May 07, 2005</p>
+                <b>Age: </b><p>19 yrs old</p>
+              </div>
+            </div>
+          </div>
+          <div class="team-image">
+            <div class="flip-container">
+              <div class="front">
+                <img src="https://i.imgur.com/f7YlOwH.png" alt="Tolentino">
+                <div class="name-label">Tolentino</div>
+              </div>
+              <div class="back">
+                <h3>Tolentinot</h3>
+                <p>Illustration Artist</p> <br><br>
+                <b>Full Name: </b><p>Ma. Sophia Cecilia O. Tolentino</p>
+                <b>Birthday: </b><p>June 23, 2004</p>
+                <b>Age: </b><p>20 yrs old</p
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="achievements">
+        <h3>Our Achievements</h3>
+        <p>Since our launch, Uno+1 Creates has served over 500 happy customers, participated in 10 local craft fairs, and received the "Best Artisan Award" in 2024. Our customers love our dedication to quality and creativity, with testimonials praising our unique designs and personalized service.</p>
+      </div>
+
+      <footer>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/QueenPiaaaa" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.x.com/woorilee22?s=21" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/iiiknit/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.pinterest.com/zlrehcx" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+          <a href="mailto:theaaaaaa10@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© 2025 Uno+1 Creates. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <div class="closing-message">
+      "Explore our creations and join our crafty community! Visit our Gallery or Shop today."
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Squada+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Squada One', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #eec0c3 0%, #ffffff 25%, #ea7a80 50%, #ffbabd 75%);
+      background-size: 300% 300%;
+      animation: gradientBG 13s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wrapper {
+      background-color: white;
+      width: 97%;
+      height: 94%;
+      padding: 20px;
+      border-radius: 25px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wrapper:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #eec0c3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-left .profile-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-left .profile-icon img {
+      width: 30px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      background-color: #eec0c3;
+      padding: 8px 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+    }
+
+    .nav-links a.active {
+      background-color: white;
+      color: #eec0c3;
+    }
+
+    .nav-links a:hover {
+      background-color: #ffbabd;
+      color: white;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
+
+    .nav-title {
+      background-color: #eec0c3;
+      padding: 8px 20px;
+      border-radius: 25px;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.2s;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 48px;
+      color: #ea7a80;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.4s;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.6s;
+    }
+
+    .main-sections {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .top-section {
+      height: 45%;
+    }
+
+    .bottom-section {
+      display: flex;
+      height: 55%;
+      gap: 20px;
+    }
+
+    .section-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .section, .sidebar-section {
+      position: relative;
+      border-radius: 25px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-section .section { animation-delay: 0.8s; }
+    .bottom-section .section { animation-delay: 0.9s; }
+    .sidebar-section:nth-child(1) { animation-delay: 1.0s; }
+    .sidebar-section:nth-child(2) { animation-delay: 1.1s; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .section:hover, .sidebar-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .image video {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .section:hover .image, 
+    .sidebar-section:hover .image {
+      background-image: none !important;
+      transform: scale(1.05);
+    }
+
+    .section:hover .image video, 
+    .sidebar-section:hover .image video {
+      display: block;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(238, 192, 195, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    .overlay span,
+    .overlay p {
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      font-family: 'Squada One', cursive;
+      text-align: center;
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .top-section .overlay span,
+    .bottom-section .overlay p {
+      font-size: 70px;
+    }
+
+    .section:hover .overlay,
+    .sidebar-section:hover .overlay {
+      opacity: 0;
+    }
+
+    .section:hover .overlay span,
+    .section:hover .overlay p,
+    .sidebar-section:hover .overlay span,
+    .sidebar-section:hover .overlay p {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 25%;
+    }
+
+    .sidebar-section {
+      height: 100%;
+    }
+
+    .image-overlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 90%;
+      max-width: 600px;
+      height: 80%;
+      background-color: #eec0c3;
+      border-radius: 25px;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      pointer-events: auto;
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .image-overlay.active {
+      display: flex;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .overlay-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .overlay-backdrop.active {
+      display: block;
+      opacity: 0.5;
+    }
+
+    .overlay-image {
+      width: 100%;
+      height: 60%;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 5px solid white;
+    }
+
+    .overlay-content {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.3s;
+    }
+
+    .overlay-content h2 {
+      font-size: 30px;
+      color: white;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .overlay-content p {
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 16px;
+      text-align: justify;
+    }
+
+    .shop-button {
+      background-color: #ea7a80;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      cursor: pointer;
+      align-self: center;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .shop-button:hover {
+      border: 3px solid #ea7a80;
+      background-color: #ffbabd;;
+      color: #ea7a80;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .shop-button:active {
+      transform: scale(0.95);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #ea7a80;
+      border: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .close-button:hover {
+      background-color: #ffbabd;
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="profile-icon">
+          <a href="menu.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/back.png"/></a>
+        </div>
+        <div class="profile-icon">
+          <img src="https://imgur.com/g3g1lps.jpeg" alt="Profile Icon" />
+        </div>
+        <div class="nav-links">
+          <a href="home.html" class="nav-button">Home</a>
+          <a href="about-us.html" class="nav-button">About Us</a>
+          <a href="gallery.html" class="nav-button active">Gallery</a>
+          <a href="shop.html" class="nav-button">Shop</a>
+          <a href="profile.html" class="nav-button">Profile</a>
+          <a href="contact-us.html" class="nav-button">Contact Us</a>
+        </div>
+        <div class="nav-links" style="padding:5px; margin-left:1rem;">
+          <a href="login.html" class="nav-button">Log out</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-row">
+      <h1 class="title">THE ARTS WE CRAFT</h1>
+      <div class="nav-title">Preview of our Products</div>
+    </div>
+
+    <div class="content">
+      <div class="main-sections">
+        <div class="top-section">
+          <div class="section" id="crochet" data-name="Crochet" data-image="https://i.imgur.com/YNr5hHR.png" data-description="Handcrafted crochet pieces with intricate patterns, made using high-quality cotton, wool, and acrylic yarns, perfect for cozy and stylish accessories.">
+            <div class="image" style="background-image: url('https://i.imgur.com/YNr5hHR.png');">
+              <video muted loop preload="none">
+                <source src="https://i.imgur.com/OVeLJG5.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="overlay"><span>CROCHET</span></div>
+          </div>
+        </div>
+        <div class="bottom-section">
+          <div class="section" id="digital-templates" data-name="Digital Templates" data-image="https://i.imgur.com/Qd4di6y.png" data-description="Customizable digital templates for planners, invitations, and more, created using Canva with high-resolution graphics and fonts, designed with creativity in mind.">
+            <div class="image" style="background-image: url('https://i.imgur.com/Qd4di6y.png');">
+              <video muted loop preload="none">
+                <source src="https://i.imgur.com/Jwo82D8.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="overlay"><p>DIGITAL TEMPLATE</p></div>
+          </div>
+          <div class="sidebar">
+            <div class="sidebar-section" id="illustrations" data-name="Illustrations" data-image="https://i.imgur.com/VOAtyKL.png" data-description="Unique, hand-drawn illustrations crafted with pencils, inks, Procreate, and Adobe Photoshop, bringing stories and ideas to life with vibrant details.">
+              <div class="image" style="background-image: url('https://i.imgur.com/VOAtyKL.png');">
+                <video muted loop preload="none">
+                  <source src="https://i.imgur.com/zSRAEdc.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="overlay"><span>ILLUSTRATION</span></div>
+            </div>
+            <div class="sidebar-section" id="posters" data-name="Posters" data-image="https://i.imgur.com/ntY4ive.png" data-description="Bold and eye-catching posters printed on premium matte or glossy paper with high-quality inks, designed using Canva, perfect for decorating spaces or promoting events.">
+              <div class="image" style="background-image: url('https://i.imgur.com/ntY4ive.png');">
+                <video muted loop preload="none">
+                  <source src="https://i.imgur.com/UeogRss.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="overlay"><span>POSTER</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-overlay" id="gallery-overlay">
+      <button class="close-button" aria-label="Close overlay">✕</button>
+      <img class="overlay-image" id="gallery-image" src="" alt="Gallery Image">
+      <div class="overlay-content">
+        <h2 id="gallery-name"></h2>
+        <p id="gallery-description"></p>
+      </div>
+      <button class="shop-button" aria-label="Proceed to shop" onclick="window.location.href='shop.html'">Shop Here!</button>
+    </div>
+    <div class="overlay-backdrop" id="overlay-backdrop"></div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.section, .sidebar-section').forEach(section => {
+      section.addEventListener('mouseenter', () => {
+        const video = section.querySelector('video');
+        if (video) video.play();
+      });
+      section.addEventListener('mouseleave', () => {
+        const video = section.querySelector('video');
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+
+      section.addEventListener('click', () => {
+        const name = section.getAttribute('data-name');
+        const image = section.getAttribute('data-image');
+        const description = section.getAttribute('data-description');
+
+        const overlay = document.getElementById('gallery-overlay');
+        const backdrop = document.getElementById('overlay-backdrop');
+        const overlayImage = document.getElementById('gallery-image');
+        const overlayName = document.getElementById('gallery-name');
+        const overlayDescription = document.getElementById('gallery-description');
+
+        overlayImage.src = image;
+        overlayName.textContent = name;
+        overlayDescription.textContent = description;
+
+        overlay.classList.add('active');
+        backdrop.classList.add('active');
+      });
+    });
+
+    const closeButton = document.querySelector('.close-button');
+    const overlay = document.getElementById('gallery-overlay');
+    const backdrop = document.getElementById('overlay-backdrop');
+
+    closeButton.addEventListener('click', () => {
+      overlay.classList.remove('active');
+      backdrop.classList.remove('active');
+    });
+
+    backdrop.addEventListener('click', () => {
+      overlay.classList.remove('active');
+      backdrop.classList.remove('active');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+        backdrop.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

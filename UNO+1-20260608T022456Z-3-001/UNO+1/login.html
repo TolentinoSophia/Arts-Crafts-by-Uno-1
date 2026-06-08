@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Squada+One&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #fff3e0, #ffd7a7, #f8e1e9, #f7e4c0);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      flex: 1;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .loginan {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s ease;
+    }
+
+    .loginan:hover {
+      transform: translateY(-5px);
+    }
+
+    .loginan h1 {
+      color: #ea7a80;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      font-family: 'Squada One', sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .infos {
+      display: grid;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .infos .namein {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ea7a80;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .infos i {
+      color: #ea7a80;
+      font-size: 1.2rem;
+    }
+
+    .infos input {
+      width: 100%;
+      height: 40px;
+      border-radius: 25px;
+      border: 1px solid #ced4da;
+      background: #f1f3f5;
+      padding: 0 1rem;
+      font-size: 1rem;
+      color: #343a40;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .infos input:focus {
+      outline: none;
+      border-color: #ea7a80;
+      box-shadow: 0 0 8px rgba(230, 57, 70, 0.3);
+    }
+
+    .infos input::placeholder {
+      color: #adb5bd;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #495057;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .options a {
+      color: #ea7a80;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .options a:hover {
+      color: #d00000;
+    }
+
+    .loginbutton {
+      display: flex;
+      justify-content: center;
+    }
+
+    .loginbutton button {
+      padding: 0.75rem 8rem;
+      border: 2px solid #ea7a80;
+      border-radius: 25px;
+      background-color: #ea7a80;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Segoe UI', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .loginbutton button:hover {
+      background-color: #fff;
+      color: #ea7a80;
+      transform: translateY(-2px);
+    }
+
+    .spaccount {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: #495057;
+    }
+
+    .spaccount a {
+      color: #ea7a80;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .spaccount a:hover {
+      color: #d00000;
+    }
+
+    @media (max-width: 480px) {
+      .loginan {
+        padding: 1.5rem;
+        max-width: 90%;
+      }
+
+      .loginan h1 {
+        font-size: 2rem;
+      }
+
+      .loginbutton {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .loginbutton button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loginan">
+      <h1>Login</h1>
+      <form>
+        <div class="infos">
+          <div class="namein">
+            <i class="fa-solid fa-user"></i>
+            <label for="username">Username</label>
+          </div>
+          <input type="text" id="username" name="username" placeholder="Enter username" required>
+        </div>
+        <div class="infos">
+          <div class="namein">
+            <i class="fa-solid fa-lock"></i>
+            <label for="password">Password</label>
+          </div>
+          <input type="password" id="password" name="password" placeholder="Enter password" required>
+        </div>
+        <div class="options">
+          <label>
+            <input type="checkbox"> Remember me
+          </label>
+          <a href="forgotpass.html">Forgot password?</a>
+        </div>
+        <div class="loginbutton">
+          <button type="submit" id="loginBtn" onclick="window.location.href='welcome.html'">Login</button>
+        </div>
+      </form>
+      <div class="spaccount">
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Squada+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Squada+One&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      overflow:hidden;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-section {
+      background: linear-gradient(-45deg, #fffaf1 0%, #ffe5ad 25%, white 50%, #f7e4c0 75%);
+      background-size: 300% 300%;
+      animation: gradientBG 13s ease infinite;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 150px 60px;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .text-group {
+      margin-left: 10px;
+    }
+
+    .hello-text {
+      color: #ea7a80;
+      font-size: 150px;
+      font-weight: 800;
+      font-family: 'Squada One', Segoe UI;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 1.5s steps(8, end) forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    .welcome-text {
+      overflow: hidden;
+      font-family: 'Pacifico', cursive;
+      font-size: 100px;
+      color: #fea997;
+      margin-left: 50px;
+      white-space: nowrap;
+      margin-bottom: 30px;
+      width: 0; 
+      animation: cursive-write 3s steps(30) 1s forwards; 
+    }
+
+    @keyframes cursive-write {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
+    .explore-button {
+      margin-left: 200px;
+      padding: 12px 50px;
+      border: 3px solid #91a6ce;
+      border-radius: 25px;
+      background-color: #f2f8fc;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      color: #ef5e5e;
+      font-family: 'Amaranth', sans-serif;
+      text-decoration: none;
+    }
+
+    .explore-button:hover {
+      background-color: #ea7a80;
+      color: #f2f8fc;
+      border-color: #91a6ce;
+    }
+
+    .vertical-names {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      display: flex;
+      gap: 40px;
+    }
+
+    .name-wrapper {
+      position: relative;
+      opacity: 0;
+      transform: translateY(-50px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .name-wrapper.animate {
+      animation: dropIn 0.6s ease forwards;
+    }
+
+    .name-wrapper:nth-child(1).animate { animation-delay: 0.1s; }
+    .name-wrapper:nth-child(2).animate { animation-delay: 0.2s; }
+    .name-wrapper:nth-child(3).animate { animation-delay: 0.3s; }
+    .name-wrapper:nth-child(4).animate { animation-delay: 0.4s; }
+    .name-wrapper:nth-child(5).animate { animation-delay: 0.5s; }
+
+    @keyframes dropIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vertical-name {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-size: 20px;
+      font-weight: bold;
+      color: #879073;
+      text-transform: uppercase;
+      font: 'Segoe UI', sans-serif;
+      padding: 0px 10px;
+    }
+
+    .highlight .vertical-name {
+      font-weight: bold;
+      color: #ea7a80;
+      margin-top: 40px;
+    }
+
+    .name-wrapper .line {
+      position: absolute;
+      right: calc(100% + 18px);
+      top: -20px;
+      height: 2000px;
+      width: 4px;
+      background-color: #91a6ce;
+    }
+
+    .bottom-section {
+      background-color: #cfe2f0;
+      border-top: 4px solid #bed3e1;
+      flex: 1;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .bottom-section.show {
+      transform: translateY(-70%);
+    }
+
+    .team-title {
+      background-color: #91a6ce;
+      border: 4px solid #bed3e1;
+      color: #ffe5ad;
+      font-weight: bold;
+      padding: 5px 160px;
+      border-radius: 50px;
+      font-size: 35px;
+      display: inline-block;
+      margin: 0 auto 30px auto;
+      font-family: 'Amaranth', sans-serif;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(234,122,128,0.4);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.07);
+        box-shadow: 0 0 16px 8px rgba(234,122,128,0.15);
+      }
+      100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(234,122,128,0.4);
+      }
+    }
+
+    .team {
+      display: flex;
+      justify-content: center;
+      gap: 90px;
+      flex-wrap: wrap;
+      padding-top: 0;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.8s cubic-bezier(0.4,0,0.2,1), padding-top 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .member {
+      text-align: center;
+      position: relative;
+    }
+
+    .cloud-shape,
+    .cloud-shapes {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background-color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cloud-shape {
+      border: 4px solid #ffe5ad;
+      border-radius: 23% 77% 69% 31% / 39% 24% 76% 61%;
+    }
+
+    .cloud-shapes {
+      border: 4px solid #91a6ce;
+      border-radius: 73% 27% 29% 71% / 34% 34% 66% 66%;
+    }
+
+    .cloud-shape img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .member-name {
+      margin-top: 10px;
+      font-family: 'Pacifico', cursive;
+      font-size: 25px;
+    }
+
+    .red-name {
+      color: #ea7a80;
+    }
+
+    .blue-name {
+      color: #879073;
+    }
+
+    @media (max-width: 768px) {
+      .top-section {
+        flex-direction: column;
+        padding: 30px 20px;
+        align-items: flex-start;
+      }
+
+      .vertical-names {
+        position: static;
+        margin-top: 30px;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .bottom-section {
+        padding: 30px 15px;
+      }
+
+      .team {
+        gap: 20px;
+      }
+
+      .hello-text {
+        font-size: 60px;
+      }
+
+      .welcome-text {
+        font-size: 45px;
+      }
+
+      .explore-button {
+        font-size: 14px;
+      }
+
+      .team-title {
+        font-size: 16px;
+        padding: 10px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-section">
+      <div class="text-group">
+        <div class="hello-text">ARTS & CRAFTS</div>
+        <div class="welcome-text">By Uno + 1</div>
+        <a href="menu.html" class="explore-button">Explore!</a>
+      </div>
+
+      <div class="vertical-names">
+        <div class="name-wrapper highlight">
+          <div class="vertical-name">paz</div>
+          <div class="line" style="height: 200px;"></div>
+        </div>
+        <div class="name-wrapper">
+          <div class="vertical-name" style="padding-top: 70px;">tuazon</div>
+          <div class="line" style="height: 300px"></div>
+        </div>
+        <div class="name-wrapper highlight">
+          <div class="vertical-name" style="padding-top: 120px;">mendoza</div>
+          <div class="line" style="height: 400px;"></div>
+        </div>
+        <div class="name-wrapper">
+          <div class="vertical-name" style="padding-top: 210px;">bolante</div>
+          <div class="line" style="height: 500px;"></div>
+        </div>
+        <div class="name-wrapper highlight">
+          <div class="vertical-name" style="padding-top: 280px;">tolentino</div>
+          <div class="line" style="height: 600px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <div class="team-title">Meet the Creatives</div>
+      <div class="team">
+        <div class="member">
+          <div class="cloud-shape">
+            <img src="https://i.imgur.com/v7kIxzO.jpeg" style="height: 205px;" alt="Zed">
+          </div>
+          <div class="member-name red-name">Zed</div>
+        </div>
+        <div class="member">
+          <div class="cloud-shapes">
+            <img src="https://i.imgur.com/k1AoIPD.jpeg" style="height: 210px;" alt="Dave">
+          </div>
+          <div class="member-name blue-name">Dave</div>
+        </div>
+        <div class="member">
+          <div class="cloud-shape">
+            <img src="https://i.imgur.com/Ht3slUE.jpeg" alt="Thea">
+          </div>
+          <div class="member-name red-name">Thea</div>
+        </div>
+        <div class="member">
+          <div class="cloud-shapes">
+            <img src="https://imgur.com/W3sTM2g.jpeg" style="height: 200px;" alt="Drids">
+          </div>
+          <div class="member-name blue-name">Drids</div>
+        </div>
+        <div class="member">
+          <div class="cloud-shape">
+            <img src="https://i.imgur.com/f7YlOwH.png" alt="Yapi">
+          </div>
+          <div class="member-name red-name">Yapi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="background-audio" autoplay loop muted>
+    <source src="lofi music 1hr.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const wrappers = document.querySelectorAll('.name-wrapper');
+      wrappers.forEach((wrapper) => {
+        wrapper.classList.add('animate');
+      });
+
+      const teamTitle = document.querySelector('.team-title');
+      const bottomSection = document.querySelector('.bottom-section');
+      const team = document.querySelector('.team');
+
+      let isTransitioning = false;
+
+      teamTitle.addEventListener('click', () => {
+        if (isTransitioning) return; // Prevent spamming during transition
+        isTransitioning = true;
+
+        if (bottomSection.classList.contains('show')) {
+          // HIDE
+          bottomSection.classList.remove('show');
+          const currentHeight = team.scrollHeight;
+          team.style.height = currentHeight + 'px'; // Set current height
+          team.style.paddingTop = '40px';
+          void team.offsetHeight; // Force reflow
+          team.style.height = '0';
+          team.style.paddingTop = '0';
+          team.classList.remove('show');
+        } else {
+          // SHOW
+          bottomSection.classList.add('show');
+          team.classList.add('show');
+          team.style.height = 'auto';
+          team.style.paddingTop = '40px';
+          const targetHeight = team.scrollHeight;
+          team.style.height = '0';
+          team.style.paddingTop = '0';
+          void team.offsetHeight; // Force reflow
+          team.style.height = targetHeight + 'px';
+          team.style.paddingTop = '40px';
+        }
+      });
+
+      // Handle transition end for both bottom-section and team
+      bottomSection.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'transform') {
+          isTransitioning = false;
+        }
+      });
+
+      team.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'height') {
+          if (team.classList.contains('show')) {
+            team.style.height = 'auto'; // Let it be responsive after expand
+            team.style.paddingTop = '40px';
+          } else {
+            team.style.height = '0';
+            team.style.paddingTop = '0';
+          }
+          isTransitioning = false;
+        }
+      });
+
+      // Music autoplay/unmute logic
+      const audio = document.getElementById('background-audio');
+      if (audio) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setTimeout(() => {
+                audio.muted = false;
+              }, 500);
+            })
+            .catch((error) => {
+              document.addEventListener('click', () => {
+                audio.play().then(() => {
+                  audio.muted = false;
+                }).catch((err) => {
+                  console.error('Error playing audio after interaction:', err);
+                });
+              }, { once: true });
+            });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

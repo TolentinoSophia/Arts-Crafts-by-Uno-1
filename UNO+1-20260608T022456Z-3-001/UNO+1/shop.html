@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Squada+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(-45deg, #91a6ce 0%, #ffffff 25%, #98b4c6 50%, #bed3e1 75%);
+      background-size: 300% 300%;
+      font-family: 'Squada One', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: gradientBG 13s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wrapper {
+      background-color: white;
+      width: 97%;
+      height: 94%;
+      padding: 10px;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wrapper:hover {
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #cfe2f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-left .profile-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-left .profile-icon img {
+      width: 30px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      background-color: #cfe2f0;
+      padding: 8px 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links:hover {
+      background-color: #d8e6f3;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-family: 'Amaranth', sans-serif;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: #e3edf7;
+      color: #91a6ce;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
+
+    .nav-links a.active {
+      background-color: white;
+      color: #cfe2f0;
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 36px;
+      color: #91a6ce;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .favorites {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .favorite-column {
+      width: 18%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+      animation-delay: calc(0.1s * var(--index));
+      position: relative;
+    }
+
+    .favorite-column:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -10px; 
+      top: 0;
+      height: 100%;
+      width: 1px;
+      background-color: #91a6ce; 
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .column-header {
+      background-color: #bed3e1;
+      color: #91a6ce;
+      width: 90%;
+      padding: 5px;
+      border-radius: 15px;
+      font-family: 'Amaranth', sans-serif;
+      margin-bottom: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .column-header:hover {
+      background-color: #d8e6f3;
+      transform: scale(1.02);
+    }
+
+    .card-container {
+      height: calc(100vh - 190px);
+      overflow-y: hidden;
+      width: 100%;
+      padding: 1rem;
+      transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+      will-change: transform;
+    }
+
+    .favorite-card {
+      position: relative;
+      width: 100%;
+      height: 130px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 12px;
+      border-radius: 20px;
+      background-color: #e3edf7;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform, box-shadow;
+    }
+
+    .favorite-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .favorite-card.clicked {
+      transform: scale(0.98);
+      transition: transform 0.1s ease;
+    }
+
+    .favorite-card:active {
+      transform: scale(0.95);
+    }
+
+    .card-text {
+      margin: 0.5rem;
+      position: absolute;
+      bottom: 0;
+      width: 92%;
+      background-color: #bed3e1;
+      color: #91a6ce;
+      padding: 5px;
+      border-radius: 20px;
+      font-size: 14px;
+      text-align: center;
+      font-family: 'Amaranth', sans-serif;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card-text:hover {
+      background-color: #d8e6f3;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      cursor: pointer;
+      margin: 5px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .arrow:hover {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+
+    .arrow-up {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #91a6ce;
+    }
+
+    .arrow-down {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #91a6ce;
+    }
+
+    .upper-right-box {
+      background-color: #cfe2f0;
+      padding: 13px 40px;
+      text-align: center;
+      border-radius: 25px;
+      color: #91a6ce;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: popIn 0.5s ease forwards 0.5s;
+    }
+
+    .upper-right-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .image-overlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 90%;
+      max-width: 1200px;
+      height: 80%;
+      background-color: #bed3e1;
+      border-radius: 25px;
+      flex-direction: row;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      pointer-events: auto;
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .image-overlay.active {
+      display: flex;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .overlay-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .overlay-backdrop.active {
+      display: block;
+      opacity: 0.5;
+    }
+
+    .image-container {
+      position: relative;
+      object-fit: contain;
+      padding: 5px;
+      width: 60%;
+      height: 100%;
+      border-radius: 25px;
+      background: #e3edf7;
+    }
+
+    .overlay-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 15px;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-controls {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .left-arrow, .right-arrow {
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border: none;
+      cursor: pointer;
+      color: #91a6ce;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .left-arrow:hover, .right-arrow:hover {
+      background-color: white;
+      transform: scale(1.2);
+    }
+
+    .overlay-content {
+      width: 40%;
+      padding: 20px;
+      text-align: left;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeInContent 0.5s ease forwards 0.3s;
+      overflow: hidden;
+    }
+
+    @keyframes fadeInContent {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .overlay-content h2 {
+      font-size: 60px;
+      color: white;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 12px;
+    }
+
+    .overlay-content p {
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .purchase-button {
+      background-color: #91a6ce;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-family: 'Amaranth', sans-serif;
+      font-size: 18px;
+      cursor: pointer;
+      align-self: center;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .purchase-button:hover {
+      border: 3px solid #91a6ce;
+      background-color: #bed3e1;
+      color: #91a6ce;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .purchase-button:active {
+      transform: scale(0.95);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #91a6ce;
+      border: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .close-button:hover {
+      background-color: #7b92b8;
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="profile-icon">
+          <a href="menu.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/back.png"/></a>
+        </div>
+        <div class="profile-icon">
+          <img src="https://imgur.com/g3g1lps.jpeg" alt="Profile Icon" />
+        </div>
+        <div class="nav-links">
+          <a href="home.html" class="nav-button">Home</a>
+          <a href="about-us.html" class="nav-button">About Us</a>
+          <a href="gallery.html" class="nav-button">Gallery</a>
+          <a href="shop.html" class="nav-button active">Shop</a>
+          <a href="profile.html" class="nav-button">Profile</a>
+          <a href="contact-us.html" class="nav-button">Contact Us</a>
+        </div>
+        <div class="nav-links" style="padding:5px; margin-left:1rem;">
+          <a href="login.html" class="nav-button">Log out</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="title">CLICK AND PURCHASE</h2>
+
+    <div class="favorites">
+      <!-- Crochet -->
+      <div class="favorite-column" style="--index: 1;">
+        <div class="column-header">Crochet</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/opypWgt.jpeg');"><div class="card-text" data-product="pcholder">Photocard Holder</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/TPSyNom.jpeg');"><div class="card-text" data-product="tumblercover">Tumbler Cover</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/3WY14O1t.jpeg');"><div class="card-text" data-product="headband">Headband</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/0FCFHx1.jpeg');"><div class="card-text" data-product="drawstring">Drawstring Pouch</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+
+      <!-- Paintings -->
+      <div class="favorite-column" style="--index: 2;">
+        <div class="column-header">Paintings</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/3Ekkv84.jpeg');"><div class="card-text" data-product="paint1">Sunset</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/UOpufKa.jpeg');"><div class="card-text" data-product="paint2">Hinata Shoyo</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/OPrFRBH.jpeg');"><div class="card-text" data-product="paint3">Autumn</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/toDOXTH.jpeg');"><div class="card-text" data-product="paint4">Levi Ackerman</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/Jci4lJV.jpeg');"><div class="card-text" data-product="paint5">Jungwon</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+
+      <!-- Flowers -->
+      <div class="favorite-column" style="--index: 3;">
+        <div class="column-header">Flowers</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/iFaG5AW.jpeg');"><div class="card-text" data-product="sunflower">Sunflower</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/rtUuh8q.jpeg');"><div class="card-text" data-product="lavender">Lavender</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/xqsBf22.jpeg');"><div class="card-text" data-product="tulips">Tulips</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/97XQkxK.jpeg');"><div class="card-text" data-product="rose">Rose</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/Qd9iP6h.jpeg');"><div class="card-text" data-product="keychain">Keychain</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+
+      <!-- Illustrations -->
+      <div class="favorite-column" style="--index: 4;">
+        <div class="column-header">Faceless Paintings</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/pn50sVO.jpeg');"><div class="card-text" data-product="illus1">Faceless Painting w/o Box</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/zRLUAKT.jpeg');"><div class="card-text" data-product="illus2">Faceless painting w/ Box</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/W2pprp7.jpeg');"><div class="card-text" data-product="illus3">Polaroid Faceless Painting</div></div>
+          <div class="favorite-card" style="background-image: url('https://i.imgur.com/pyPIefZ.jpeg');"><div class="card-text" data-product="illus4">Polaroid Faceless Painting</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+
+      <!-- Presentations -->
+      <div class="favorite-column" style="--index: 5;">
+        <div class="column-header">Presentations</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/cQquBtX.jpeg');"><div class="card-text" data-product="ppt1">Presentation 01</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/wudEjP8.jpeg');"><div class="card-text" data-product="ppt2">Presentation 02</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/cMr340a.jpeg');"><div class="card-text" data-product="ppt3">Presentation 03</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/5yyM4u3.jpeg');"><div class="card-text" data-product="ppt4">Presentation 04</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+
+      <!-- Posters -->
+      <div class="favorite-column" style="--index: 6;">
+        <div class="column-header">Posters</div>
+        <div class="arrow arrow-up" aria-label="Scroll up"></div>
+        <div class="card-container">
+          <div class="favorite-card" style="background-image: url('https://imgur.com/dYilaYe.jpeg');"><div class="card-text" data-product="poster1">Educational Poster</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/72F7bkM.jpeg');"><div class="card-text" data-product="poster2">Business Poster</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/tHfyIjG.jpeg');"><div class="card-text" data-product="poster3">Advertisement Poster</div></div>
+          <div class="favorite-card" style="background-image: url('https://imgur.com/v3D8V66.jpeg');"><div class="card-text" data-product="poster4">Project Poster</div></div>
+        </div>
+        <div class="arrow arrow-down" aria-label="Scroll down"></div>
+      </div>
+    </div>
+
+    <div class="upper-right-box">
+      Get yours now!
+    </div>
+
+    <div class="image-overlay" id="product-overlay">
+      <button class="close-button" aria-label="Close overlay">✕</button>
+      <div class="image-container">
+        <img class="overlay-image" id="product-image" src="" alt="Product Image">
+        <div class="image-controls">
+          <button class="left-arrow" aria-label="Previous image">◄</button>
+          <button class="right-arrow" aria-label="Next image">►</button>
+        </div>
+      </div>
+      <div class="overlay-content">
+        <div>
+          <h2 id="product-name">PRODUCT NAME</h2>
+          <p id="product-description">Description of product<br>Price of product</p>
+        </div>
+        <button class="purchase-button" aria-label="Proceed to checkout">Purchase Here!</button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay-backdrop" id="overlay-backdrop"></div>
+
+  <script>
+    // CardScroller class for smooth, circular card scrolling
+    class CardScroller {
+      constructor(column) {
+        this.column = column;
+        this.container = column.querySelector('.card-container');
+        this.cardHeight = this.container.querySelector('.favorite-card').offsetHeight + 12; // 12px margin-bottom
+        this.isAnimating = false;
+        this.init();
+      }
+
+      scroll(direction) {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+        this.container.style.transition = 'transform 0.45s cubic-bezier(0.77, 0, 0.175, 1)';
+        this.container.style.willChange = 'transform';
+
+        if (direction < 0) {
+          // Scroll up: animate down, then move last card to top
+          this.container.style.transform = `translateY(${this.cardHeight}px)`;
+          setTimeout(() => {
+            this.container.style.transition = 'none';
+            this.container.insertBefore(this.container.lastElementChild, this.container.firstElementChild);
+            this.container.style.transform = 'translateY(0)';
+            // Force reflow
+            void this.container.offsetWidth;
+            this.container.style.transition = 'transform 0.45s cubic-bezier(0.77, 0, 0.175, 1)';
+            this.isAnimating = false;
+          }, 450);
+        } else {
+          // Scroll down: animate up, then move first card to bottom
+          this.container.style.transform = `translateY(-${this.cardHeight}px)`;
+          setTimeout(() => {
+            this.container.style.transition = 'none';
+            this.container.appendChild(this.container.firstElementChild);
+            this.container.style.transform = 'translateY(0)';
+            // Force reflow
+            void this.container.offsetWidth;
+            this.container.style.transition = 'transform 0.45s cubic-bezier(0.77, 0, 0.175, 1)';
+            this.isAnimating = false;
+          }, 450);
+        }
+      }
+
+      // Prevent mouse wheel scroll
+      preventWheel() {
+        this.container.addEventListener('wheel', e => e.preventDefault());
+      }
+
+      // Attach event listeners to arrows using event delegation
+      attachArrowEvents() {
+        this.column.addEventListener('click', (e) => {
+          if (e.target.classList.contains('arrow-up')) {
+            this.scroll(-1);
+          } else if (e.target.classList.contains('arrow-down')) {
+            this.scroll(1);
+          }
+        });
+      }
+
+      init() {
+        this.preventWheel();
+        this.attachArrowEvents();
+      }
+    }
+
+    // Initialize CardScroller for each column
+    document.querySelectorAll('.favorite-column').forEach(column => {
+      new CardScroller(column);
+    });
+
+    const productData = {
+      'pcholder': {
+        name: 'Photocard Holder',
+        images: ['https://imgur.com/opypWgt.jpeg', 'https://imgur.com/l970sSt.jpeg', 'https://imgur.com/X1Vkqd5.jpeg', 'https://img Dedupef5.jpeg'],
+        description: 'Photocard holder with mushroom keychain.<br>Price: Php 100.00 - Photocard Holder <br> Php 50.00 - Keychain',
+        price: 'Php 100.00'
+      },
+      'tumblercover': {
+        name: 'Tumbler Cover',
+        images: ['https://imgur.com/TPSyNom.jpeg', 'https://imgur.com/Xong1uJ.jpeg', 'https://imgur.com/mYTWI1k.jpeg', 'https://imgur.com/fEk3OdL.jpeg'],
+        description: 'Taylor Swift folklore and evermore inspired tumbler cover.<br>Price: Php 300.00 - folklore <br> Php 250.00 - evermore',
+        price: 'Php 300.00'
+      },
+      'headband': {
+        name: 'Headband',
+        images: ['https://imgur.com/3WY14O1t.jpeg', 'https://imgur.com/KUViFDs.jpeg', 'https://imgur.com/aunydZ6.jpeg'],
+        description: 'Tulip headband.<br>Price: Php 130.00',
+        price: 'Php 130.00'
+      },
+      'drawstring': {
+        name: 'Drawstring Pouch',
+        images: ['https://imgur.com/0FCFHx1.jpeg', 'https://imgur.com/8Yrt9K4.jpeg', 'https://imgur.com/AO2RNPI.jpeg', 'https://imgur.com/SMz3Tge.jpeg', 'https://imgur.com/Coobv6I.jpeg'],
+        description: 'Drawstring pouch for phone, charger, and earphones.<br>Price: Php 150.00 - phone pouch <br> Php 100.00 - charger pouch <br> Php 70.00 - earphones pouch',
+        price: 'Php 150.00'
+      },
+      'paint1': {
+        name: 'Sunset Painting',
+        images: ['https://imgur.com/3Ekkv84.jpeg'],
+        description: 'Stunning sunset painting by the beach.<br>Price: Php 300.00',
+        price: 'Php 300.00'
+      },
+      'paint2': {
+        name: 'Hinata Shoyo Painting',
+        images: ['https://imgur.com/UOpufKa.jpeg'],
+        description: 'Hinata from Haikyuu anime.<br>Price: Php 250.00',
+        price: 'Php 250.00'
+      },
+      'paint3': {
+        name: 'Autumn Painting',
+        images: ['https://imgur.com/OPrFRBH.jpeg'],
+        description: 'Vibrant painting of autumn leaves and bench.<br>Price: Php 300.00',
+        price: 'Php 300.00'
+      },
+      'paint4': {
+        name: 'Levi Ackerman Painting',
+        images: ['https://imgur.com/toDOXTH.jpeg'],
+        description: 'Levi from Attack on Titan (AoT) anime.<br>Price: Php 200.00',
+        price: 'Php 200.00'
+      },
+      'paint5': {
+        name: 'Yang Jungwon Painting',
+        images: ['https://imgur.com/Jci4lJV.jpeg'],
+        description: 'Jungwon from K-pop group Enhypen painting.<br>Price: Php 150.00',
+        price: 'Php 150.00'
+      },
+      'sunflower': {
+        name: 'Crochet Sunflower',
+        images: ['https://imgur.com/iFaG5AW.jpeg', 'https://imgur.com/0c8YyOV.jpeg', 'https://imgur.com/5VOpBCd.jpeg'],
+        description: 'Vibrant crochet sunflower charm.<br>Price: Php 120.00',
+        price: 'Php 120.00'
+      },
+      'lavender': {
+        name: 'Crochet Lavender',
+        images: ['https://imgur.com/rtUuh8q.jpeg', 'https://imgur.com/0c8YyOV.jpeg', 'https://imgur.com/5VOpBCd.jpeg'],
+        description: 'Handcrafted crochet lavender.<br>Price: Php 50.00 each <br> Get 3 for Php 120.00',
+        price: 'Php 50.00'
+      },
+      'tulips': {
+        name: 'Crochet Tulips',
+        images: ['https://imgur.com/xqsBf22.jpeg', 'https://imgur.com/0c8YyOV.jpeg', 'https://imgur.com/5VOpBCd.jpeg'],
+        description: 'Handcrafted crochet tulips.<br>Price: Php 130.00 each',
+        price: 'Php 130.00'
+      },
+      'rose': {
+        name: 'Crochet Rose',
+        images: ['https://imgur.com/97XQkxK.jpeg', 'https://imgur.com/0c8YyOV.jpeg', 'https://imgur.com/5VOpBCd.jpeg'],
+        description: 'Handcrafted crochet rose.<br>Price: Php 150.00 each',
+        price: 'Php 150.00'
+      },
+      'keychain': {
+        name: 'Crochet Flower Keychain',
+        images: ['https://imgur.com/Qd9iP6h.jpeg', 'https://imgur.com/N2qxgLo.jpeg', 'https://imgur.com/4X8vPZ1.jpeg', 'https://imgur.com/xB1p4lF.jpeg', 'https://imgur.com/yrknenQ.jpeg'],
+        description: 'Handcrafted crochet flower keychain.<br>Price: Php 45.00 - daisy <br> Php 35.00 - sunflower <br> Php 40.00 - rose',
+        price: 'Php 45.00'
+      },
+      'illus1': {
+        name: 'Faceless Painting w/o Box',
+        images: ['https://imgur.com/pn50sVO.jpeg'],
+        description: 'Canvas Board Faceless Painting with Easel w/o Box <br> • Canvas Board - 10 x 10 cm <br> • Wood Easel - 15 x 8 cm  <br> • Dried Flower - 11 cm height <br>Price: Php 240.00',
+        price: 'Php 240.00'
+      },
+      'illus2': {
+        name: 'Faceless Painting w/ Box',
+        images: ['https://imgur.com/zRLUAKT.jpeg'],
+        description: 'Canvas Board Faceless Painting with Easel in Box <br> • Canvas Board - 10 x 10 cm <br> • Wood Easel - 15 x 8 cm <br> • 2 Dried Flower - 11 cm height <br> • 1 Greeting Card <br>Price: Php 270.00',
+        price: 'Php 270.00'
+      },
+      'illus3': {
+        name: 'Polaroid Faceless Painting',
+        images: ['https://imgur.com/W2pprp7.jpeg'],
+        description: 'Polaroid Faceless Painting in a Frame with Box <br> • Polaroid - 8.6 x 5.4 cm <br> • Frame - 9 x 9 cm <br> • 1 Ponytail and 1 Clamp <br> • Frame with Fairylights <br>Price: Php 240.00',
+        price: 'Php 240.00'
+      },
+      'illus4': {
+        name: 'Polaroid Faceless Painting w/ Design',
+        images: ['https://i.imgur.com/pyPIefZ.jpeg'],
+        description: 'Polaroid Faceless Painting w/ Design <br> • Polaroid Size: 8.6 x 5.4cm <br> • Polaroid Card Holder: 27.6 x 12.9 cm <br> Price: Php 250.00',
+        price: 'Php 250.00'
+      },
+      'ppt1': {
+        name: 'Google Theme Presentation Template',
+        images: ['https://imgur.com/cQquBtX.jpeg'],
+        description: 'Simple educational presentation. <br> • Color Palette: Red, Yellow, Green, Blue, and Gray <br> • Slides: 30 Slides <br> • Size: 1920x1080 px <br>Price: Php 100.00',
+        price: 'Php 100.00'
+      },
+      'ppt2': {
+        name: 'Green Project Presentation Template',
+        images: ['https://imgur.com/wudEjP8.jpeg'],
+        description: 'Report presentation. <br> • Color Palette: Green, White, Gray <br> • Slides: 13 Slides <br> • Size: 1920x1080 px <br>Price: Php 100.00',
+        price: 'Php 100.00'
+      },
+      'ppt3': {
+        name: 'Green Research Proposal Template',
+        images: ['https://imgur.com/cMr340a.jpeg'],
+        description: 'Minimalist research presentation layout. <br> • Color Palette: Green, Orange, Black <br> • Slides: 15 Slides <br> • Size: 1920x1080 px <br>Price: Php 100.00',
+        price: 'Php 100.00'
+      },
+      'ppt4': {
+        name: 'Ice Cream Theme Presentation Template',
+        images: ['https://imgur.com/5yyM4u3.jpeg'],
+        description: 'Clean report presentation layout.<br> • Color Palette: Brown, Pink, White <br> • Slides: 12 Slides <br> • Size: 1920x1080 px <br>Price: Php 100.00',
+        price: 'Php 100.00'
+      },
+      'poster1': {
+        name: 'Biological Hazards Poster',
+        images: ['https://imgur.com/dYilaYe.jpeg'],
+        description: 'Eye-catching educational poster. <br> • Color Palette: Green, Yellow, Brown, White, and Gray <br> • Size: 8 x 14 in <br>Price: Php 250.00',
+        price: 'Php 250.00'
+      },
+      'poster2': {
+        name: 'Advertisement Drinks Poster',
+        images: ['https://imgur.com/72F7bkM.jpeg'],
+        description: 'Vibrant business poster design. <br> • Color Palette: Brown, White, and Black <br> • Size: 1080 x 1350 px <br>Price: Php 200.00',
+        price: 'Php 200.00'
+      },
+      'poster3': {
+        name: 'Ads Poster Sample',
+        images: ['https://imgur.com/tHfyIjG.jpeg'],
+        description: 'Colorful advertisement poster design.<br>Price: Php 200.00',
+        price: 'Php 200.00'
+      },
+      'poster4': {
+        name: 'Project Poster Sample',
+        images: ['https://imgur.com/v3D8V66.jpeg'],
+        description: 'Creative project poster design.<br>Price: Php 150.00',
+        price: 'Php 150.00'
+      }
+    };
+
+    const productOrder = Object.keys(productData); // Track product order for overlay navigation
+    const FALLBACK_IMAGE = 'https://via.placeholder.com/600x400?text=Image+Not+Found';
+
+    class ProductOverlay {
+      constructor(overlayId) {
+        this.overlay = document.getElementById(overlayId);
+        this.overlayImage = this.overlay.querySelector('.overlay-image');
+        this.productName = this.overlay.querySelector('#product-name');
+        this.productDescription = this.overlay.querySelector('#product-description');
+        this.purchaseButton = this.overlay.querySelector('.purchase-button');
+        this.leftArrow = this.overlay.querySelector('.left-arrow');
+        this.rightArrow = this.overlay.querySelector('.right-arrow');
+        this.closeButton = this.overlay.querySelector('.close-button');
+        this.backdrop = document.getElementById('overlay-backdrop');
+        this.currentImage = 0;
+        this.images = [];
+        this.isTransitioning = false;
+        this.currentProductId = null;
+
+        this.init();
+      }
+
+      getCurrentProductIndex() {
+        return productOrder.indexOf(this.currentProductId);
+      }
+
+      openOverlay(productId) {
+        const product = productData[productId];
+        if (!product) return;
+
+        this.currentProductId = productId;
+        this.images = product.images || [];
+        this.currentImage = 0;
+        this.productName.textContent = product.name;
+        this.productDescription.innerHTML = product.description;
+        this.updateImage();
+        this.overlay.classList.add('active');
+        this.backdrop.classList.add('active');
+      }
+
+      updateImage() {
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
+
+        this.overlayImage.style.opacity = '0';
+        setTimeout(() => {
+          if (this.images.length === 0) {
+            this.overlayImage.src = FALLBACK_IMAGE;
+            this.overlayImage.style.opacity = '1';
+            this.isTransitioning = false;
+            return;
+          }
+
+          this.overlayImage.src = this.images[this.currentImage] || FALLBACK_IMAGE;
+          this.overlayImage.style.opacity = '1';
+        }, 300);
+
+        this.overlayImage.onload = () => {
+          this.isTransitioning = false;
+        };
+        this.overlayImage.onerror = () => {
+          this.overlayImage.src = FALLBACK_IMAGE;
+          this.overlayImage.style.opacity = '1';
+          this.isTransitioning = false;
+        };
+      }
+
+      closeOverlay() {
+        this.overlay.classList.remove('active');
+        this.backdrop.classList.remove('active');
+        this.isTransitioning = false;
+        this.currentProductId = null;
+      }
+
+      handleSwipe(direction) {
+        if (this.isTransitioning) return;
+        let idx = this.getCurrentProductIndex();
+        if (direction === 'left') {
+          idx = (idx + 1) % productOrder.length;
+        } else {
+          idx = (idx - 1 + productOrder.length) % productOrder.length;
+        }
+        this.openOverlay(productOrder[idx]);
+      }
+
+      init() {
+        this.purchaseButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (this.currentProductId) {
+            const product = productData[this.currentProductId];
+            const image = product.images[0] || FALLBACK_IMAGE;
+            window.location.href = `order-form.html?product=${encodeURIComponent(product.name)}&price=${encodeURIComponent(product.price.replace('Php ', ''))}&image=${encodeURIComponent(image)}`;
+          }
+        });
+
+        this.leftArrow.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (this.isTransitioning) return;
+          let idx = this.getCurrentProductIndex();
+          idx = (idx - 1 + productOrder.length) % productOrder.length;
+          this.openOverlay(productOrder[idx]);
+        });
+
+        this.rightArrow.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (this.isTransitioning) return;
+          let idx = this.getCurrentProductIndex();
+          idx = (idx + 1) % productOrder.length;
+          this.openOverlay(productOrder[idx]);
+        });
+
+        this.closeButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.closeOverlay();
+        });
+
+        this.backdrop.addEventListener('click', () => {
+          this.closeOverlay();
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (!this.overlay.classList.contains('active') || this.isTransitioning) return;
+          if (e.key === 'ArrowLeft') {
+            let idx = this.getCurrentProductIndex();
+            idx = (idx - 1 + productOrder.length) % productOrder.length;
+            this.openOverlay(productOrder[idx]);
+          } else if (e.key === 'ArrowRight') {
+            let idx = this.getCurrentProductIndex();
+            idx = (idx + 1) % productOrder.length;
+            this.openOverlay(productOrder[idx]);
+          } else if (e.key === 'Escape') {
+            this.closeOverlay();
+          }
+        });
+
+        let touchStartX = 0;
+        this.overlay.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        this.overlay.addEventListener('touchend', (e) => {
+          if (this.isTransitioning) return;
+          const touchEndX = e.changedTouches[0].clientX;
+          const diffX = touchStartX - touchEndX;
+          if (Math.abs(diffX) > 50) {
+            this.handleSwipe(diffX > 0 ? 'left' : 'right');
+          }
+        }, { passive: true });
+
+        document.querySelectorAll('.card-text').forEach(card => {
+          card.addEventListener('click', () => {
+            const productId = card.getAttribute('data-product');
+            this.openOverlay(productId);
+          });
+        });
+      }
+    }
+
+    new ProductOverlay('product-overlay');
+
+    document.querySelectorAll('.favorite-column').forEach((column, index) => {
+      column.style.setProperty('--index', index + 1);
+    });
+  </script>
+</body>
+</html>
